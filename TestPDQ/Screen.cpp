@@ -1,5 +1,12 @@
 #include "Screen.h"
+#include <Arduino.h>
 
+extern void _FillRect(uint16_t xpos, uint16_t ypos, uint16_t width, uint16_t height, uint16_t color);
+extern void _DrawPixel(uint16_t xpos, uint16_t ypos, uint16_t color);
+extern void _ScreenBegin();
+extern void _SetRotation(int rot);
+extern int _ScreenWidth();
+extern int _ScreenHeight();
 
 Screen::Screen()
 {
@@ -17,24 +24,23 @@ void Screen::Init()
 #endif
   
   //most config is done in PDQ_ST7735_config.h
-  tft.begin();
-  tft.setRotation(1);
-  //tft.fillScreen();
+  _ScreenBegin();
+  _SetRotation(0);  
 }
 
 int Screen::Width()
 {
-  return tft.width();
+  return _ScreenWidth();
 }
 
 int Screen::Height()
 {
-  return tft.height();
+  return _ScreenHeight();
 }
 
 void Screen::DrawPixel(short xpos, short ypos, int pixel)
 {
-  tft.drawPixel(xpos, ypos, pixel);
+  _DrawPixel(xpos, ypos, pixel);
 }
 
 void Screen::Draw(short xpos, short ypos, short width, short height, int* pixels)
@@ -52,7 +58,7 @@ void Screen::Draw(short xpos, short ypos, short width, short height, int* pixels
       //magenta. These values will be ignored (not drawn).
       if (value != 0xF81F)
       {
-        tft.drawPixel(xpos + x, ypos + y, value);
+        _DrawPixel(xpos + x, ypos + y, value);
       }  
     }
   }
@@ -60,7 +66,7 @@ void Screen::Draw(short xpos, short ypos, short width, short height, int* pixels
 
 void Screen::DrawRect(short xpos, short ypos, short width, short height, int color)
 {
-  tft.fillRect(xpos, ypos, width, height, color);
+  _FillRect(xpos, ypos, width, height, color);
 }
 
 

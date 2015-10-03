@@ -1,10 +1,5 @@
 #ifndef Screen_h
 #define Screen_h
-#include "PDQ_ST7735_config.h"
-#include <PDQ_GFX.h>   //Core graphics library
-#include <PDQ_ST7735.h> //hardware-specific library
-
-
 
 class Screen
 {
@@ -23,8 +18,7 @@ class Screen
     int Height();
     
     //going to need something here to keep track of the BG tiles
-
-    PDQ_ST7735 tft;
+    
   private:
     Screen();
     Screen(Screen const&);
